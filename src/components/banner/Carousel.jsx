@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { TrendingCoins } from "../../config/api";
 import { CryptoState } from "../../CryptoContext";
 import { numberWithCommas } from "../CoinsTable";
+import { LinearProgress } from "@material-ui/core";
 
 const Carousel = () => {
     const [ trending, setTrending ] = useState([]);
@@ -13,7 +14,6 @@ const Carousel = () => {
 
     const fetchTrendingCoins = async () => {
         const { data } = await axios.get(TrendingCoins(currency));
-        console.log(data);
         setTrending(data);
     }
     useEffect(() => {
@@ -77,6 +77,8 @@ const Carousel = () => {
             items: 4,
         },
     }
+
+    if (!trending) return <LinearProgress style={{ backgroundColor: "gold" }} />;
 
     return (
         <div className={classes.carousel}>
